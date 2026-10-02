@@ -293,3 +293,5 @@ body.modal-open{overflow:hidden}
 .sign.in .sign-role{opacity:1}
 @media(max-width:880px){.callout.c1{right:-4%}.callout.c3{right:0}.callout.c2{left:0}.stat{padding-right:1.4rem}.stat + .stat{padding-left:1.4rem}}
 @media(prefers-reduced-motion:reduce){.about-photo .blob{animation:none}.callout .pin::after{animation:none}.sig{clip-path:none;transition:none}.sign-role{opacity:1;transition:none}.hl{background-size:100% 42%;transition:none}}
+.stat b .cnt{font:inherit;letter-spacing:inherit;text-transform:none;color:inherit;display:inline}
+.stat b{font-size:clamp(2.6rem,4vw,3.4rem);line-height:1;font-variant-numeric:lining-nums}

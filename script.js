@@ -72,6 +72,54 @@
     });
   }
 
+  // ---- About: count-up stats + mouse parallax ----
+  var statsEl = document.querySelector('.stats');
+  var counters = document.querySelectorAll('.cnt');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (statsEl && counters.length && 'IntersectionObserver' in window && !reduceMotion) {
+    var raf = null;
+    function runCount() {
+      var t0 = null, dur = 1500;
+      cancelAnimationFrame(raf);
+      function step(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        counters.forEach(function (c) { c.textContent = Math.round(c.dataset.to * e); });
+        if (p < 1) raf = requestAnimationFrame(step);
+      }
+      raf = requestAnimationFrame(step);
+    }
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) runCount();
+        else { cancelAnimationFrame(raf); counters.forEach(function (c) { c.textContent = '0'; }); }
+      });
+    }, { threshold: 0.6 }).observe(statsEl);
+  }
+
+  var aboutEl = document.getElementById('about');
+  var photoEl = document.querySelector('.about-photo');
+  if (aboutEl && photoEl && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+    var pending = false, mx = 0, my = 0;
+    aboutEl.addEventListener('mousemove', function (e) {
+      var r = aboutEl.getBoundingClientRect();
+      mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      my = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      if (!pending) {
+        pending = true;
+        requestAnimationFrame(function () {
+          photoEl.style.setProperty('--mx', mx.toFixed(3));
+          photoEl.style.setProperty('--my', my.toFixed(3));
+          pending = false;
+        });
+      }
+    });
+    aboutEl.addEventListener('mouseleave', function () {
+      photoEl.style.setProperty('--mx', 0);
+      photoEl.style.setProperty('--my', 0);
+    });
+  }
+
   // ---- Contact popup ----
   var modal = document.getElementById('contactModal');
   var openBtn = document.getElementById('openContact');

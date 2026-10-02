@@ -263,35 +263,39 @@
       <span class="label">*05 — Start a project</span>
       <h3 id="cmTitle">Let's build your <span class="it">website</span></h3>
       <form id="contactForm" novalidate>
-        <div class="field field-to"><label for="cfTo">To</label><input id="cfTo" type="email" value="alyssa9012@gmail.com" readonly aria-readonly="true"></div>
-        <div class="row">
-          <div class="field"><label for="cfName">Your name</label><input id="cfName" name="name" type="text" autocomplete="name" required></div>
-          <div class="field"><label for="cfEmail">Your email</label><input id="cfEmail" name="email" type="email" autocomplete="email" placeholder="name@company.com" required></div>
-        </div>
-        <div class="row">
-          <div class="field"><label for="cfType">I need</label>
-            <select id="cfType" name="project_type">
-              <option>A new website</option>
-              <option>A landing page</option>
-              <option>A website redesign</option>
-              <option>Brand &amp; AI visuals</option>
-              <option>Something else</option>
-            </select>
+        <div class="form-scroll">
+          <div class="field field-to"><label for="cfTo">To</label><input id="cfTo" type="email" value="alyssa9012@gmail.com" readonly aria-readonly="true"></div>
+          <div class="row">
+            <div class="field"><label for="cfName">Your name</label><input id="cfName" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="cfEmail">Your email</label><input id="cfEmail" name="email" type="email" autocomplete="email" placeholder="name@company.com" required></div>
           </div>
-          <div class="field"><label for="cfBudget">Budget</label>
-            <select id="cfBudget" name="budget">
-              <option>Not sure yet</option>
-              <option>Under $1,000</option>
-              <option>$1,000 – $3,000</option>
-              <option>$3,000 – $7,000</option>
-              <option>$7,000+</option>
-            </select>
+          <div class="field">
+            <span class="flabel" id="lblType">I need</span>
+            <div class="pills" role="radiogroup" aria-labelledby="lblType">
+              <label class="pill"><input type="radio" name="project_type" value="A new website" checked><span>New website</span></label>
+              <label class="pill"><input type="radio" name="project_type" value="A landing page"><span>Landing page</span></label>
+              <label class="pill"><input type="radio" name="project_type" value="A website redesign"><span>Redesign</span></label>
+              <label class="pill"><input type="radio" name="project_type" value="Brand &amp; AI visuals"><span>Brand &amp; AI visuals</span></label>
+              <label class="pill"><input type="radio" name="project_type" value="Something else"><span>Other</span></label>
+            </div>
           </div>
+          <div class="field">
+            <span class="flabel" id="lblBudget">Budget</span>
+            <div class="pills" role="radiogroup" aria-labelledby="lblBudget">
+              <label class="pill"><input type="radio" name="budget" value="Not sure yet" checked><span>Not sure yet</span></label>
+              <label class="pill"><input type="radio" name="budget" value="Under $1,000"><span>Under $1k</span></label>
+              <label class="pill"><input type="radio" name="budget" value="$1,000 – $3,000"><span>$1–3k</span></label>
+              <label class="pill"><input type="radio" name="budget" value="$3,000 – $7,000"><span>$3–7k</span></label>
+              <label class="pill"><input type="radio" name="budget" value="$7,000+"><span>$7k+</span></label>
+            </div>
+          </div>
+          <div class="field"><label for="cfMsg">About your business</label><textarea id="cfMsg" name="message" rows="3" placeholder="What do you do, and what should the website achieve?" required></textarea></div>
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
         </div>
-        <div class="field"><label for="cfMsg">About your business</label><textarea id="cfMsg" name="message" rows="3" placeholder="What do you do, and what should the website achieve?" required></textarea></div>
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
-        <p class="form-note" id="cfNote" role="status" aria-live="polite"></p>
-        <button type="submit" class="btn" id="cfSubmit">Request a website <span class="arrow">→</span></button>
+        <div class="form-foot">
+          <p class="form-note" id="cfNote" role="status" aria-live="polite"></p>
+          <button type="submit" class="btn" id="cfSubmit">Request a website <span class="arrow">→</span></button>
+        </div>
       </form>
     </div>
     <div class="modal-done" id="cmDone" hidden>

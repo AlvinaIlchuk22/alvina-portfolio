@@ -295,3 +295,9 @@ body.modal-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.about-photo .blob{animation:none}.callout .pin::after{animation:none}.sig{clip-path:none;transition:none}.sign-role{opacity:1;transition:none}.hl{background-size:100% 42%;transition:none}}
 .stat b .cnt{font:inherit;letter-spacing:inherit;text-transform:none;color:inherit;display:inline}
 .stat b{font-size:clamp(2.6rem,4vw,3.4rem);line-height:1;font-variant-numeric:lining-nums}
+
+/* ---------- HERO interactive particles ---------- */
+.hero-portrait .frame.circle .hero-video{transition:opacity .9s var(--ease)}
+.hero-portrait .frame.circle .hero-video.off{opacity:0}
+.hero-particles{position:absolute;inset:0;width:100%;height:100%;z-index:3;opacity:0;pointer-events:auto;cursor:crosshair;touch-action:pan-y;border-radius:50%;background:radial-gradient(circle at 40% 30%,#f7eee2,#eddcca 65%,#dcc7b0);transition:opacity .9s var(--ease)}
+.hero-particles.on{opacity:1}

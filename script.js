@@ -32,23 +32,6 @@
     reveals.forEach(function (r) { r.classList.add('in'); });
   }
 
-  // Hero video: replay from the start every time it scrolls into view
-  var heroVideo = document.querySelector('.hero-video');
-  if (heroVideo) heroVideo.playbackRate = 1.4;
-  if (heroVideo && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          heroVideo.currentTime = 0;
-          var p = heroVideo.play();
-          if (p && p.catch) p.catch(function () {});
-        } else {
-          heroVideo.pause();
-        }
-      });
-    }, { threshold: 0.4 }).observe(heroVideo);
-  }
-
   // Active nav link via section observer
   var sections = ['work', 'about', 'services', 'contact'];
   var links = {};

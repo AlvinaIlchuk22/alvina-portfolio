@@ -25,13 +25,14 @@
 
   var RING = { r: 0.385, count: 2600 };
   var LETTER_H = 0.27, LETTER_GAP = 0.045, BASE_Y = 0.635;
-  var LETTER_COUNT = 7000, DOT_COUNT = 110;
+  var LETTER_COUNT = 7000, DOT_COUNT = 0;
   var SPHERE_R = 0.335;
 
   var n = 0, X, Y, VX, VY, TX, TY, PH, SZ, KK, DLY, SX, SY, SZZ, DEP, bounds = [];
   var built = false, running = false, visible = true, raf = 0;
   var dpr = 1;
   var hover = false, m = reduce ? 1 : 0, touchTimer = 0;
+  var ptr = { x: 0, y: 0, on: false };
 
   function pickBucket() {
     var r = Math.random(), acc = 0;
@@ -137,10 +138,22 @@
       var sx = 0.5 + x1 * SPHERE_R * f, sy = 0.5 + y2 * SPHERE_R * f + bob;
       DEP[i] = z2;
       var pm = smooth(m * 1.7 - DLY[i] * 1.2);
-      var tx = sx + (TX[i] - sx) * pm + Math.sin(t * 0.002 + PH[i]) * 0.0012;
-      var ty = sy + (TY[i] - sy) * pm + Math.cos(t * 0.0017 + PH[i]) * 0.0012;
+      var amp = 0.0012 + 0.0042 * pm;
+      var ph = PH[i];
+      var wave = Math.sin((TX[i] + TY[i]) * 11 - t * 0.0019) * 0.0022 * pm;
+      var tx = sx + (TX[i] - sx) * pm + Math.sin(t * 0.0021 + ph) * amp + Math.sin(t * 0.00071 + ph * 2.3) * amp * 0.7 + wave;
+      var ty = sy + (TY[i] - sy) * pm + Math.cos(t * 0.0018 + ph * 1.7) * amp + Math.cos(t * 0.00093 + ph) * amp * 0.7 + wave;
       var vx = VX[i] + (tx - X[i]) * KK[i];
       var vy = VY[i] + (ty - Y[i]) * KK[i];
+      if (ptr.on && m > 0.3) {
+        var ex = X[i] - ptr.x, ey = Y[i] - ptr.y, d2 = ex * ex + ey * ey;
+        if (d2 < 0.0225) {
+          var dd = Math.sqrt(d2) || 0.0001, fo = (1 - dd / 0.15);
+          fo = fo * fo * 0.0065 * m;
+          vx += ex / dd * fo;
+          vy += ey / dd * fo;
+        }
+      }
       if (swirl > 0.0001) {
         vx += -(Y[i] - 0.5) * swirl * 0.02;
         vy += (X[i] - 0.5) * swirl * 0.02;
@@ -183,11 +196,17 @@
   }
   function stopLoop() { running = false; cancelAnimationFrame(raf); }
 
+  frame.addEventListener('pointermove', function (e) {
+    var r = frame.getBoundingClientRect();
+    ptr.x = (e.clientX - r.left) / r.width;
+    ptr.y = (e.clientY - r.top) / r.height;
+    ptr.on = e.pointerType !== 'touch';
+  });
   frame.addEventListener('pointerenter', function (e) {
     if (e.pointerType === 'mouse' || e.pointerType === 'pen') hover = true;
   });
   frame.addEventListener('pointerleave', function (e) {
-    if (e.pointerType === 'mouse' || e.pointerType === 'pen') hover = false;
+    if (e.pointerType === 'mouse' || e.pointerType === 'pen') { hover = false; ptr.on = false; }
   });
   frame.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'touch') {
